@@ -48,12 +48,14 @@ const descriptor = {
 
 ### 1. data选项被转换成响应式的时机
 
-    当我们执行下面代码时
+当我们执行下面代码时
+
 ```js
 new Vue({ /** 选项 **/ })
 ```
 
-    本质上就是调用Vue.prototype._init方法
+本质上就是调用Vue.prototype._init方法
+
 ```js
 // 代码简化
 Vue.prototype._init = function (Object) {
@@ -89,10 +91,9 @@ Vue.prototype._init = function (Object) {
   }
 ```
 
-    重点关注initState方法
+重点关注initState方法
 
-    因为在该方法中 会对 data props 选项进行转换
-
+因为在该方法中 会对 data props 选项进行转换
 
 ```js
 function initState (vm) {
@@ -112,13 +113,13 @@ function initState (vm) {
 }
 ```
 
-从initState函数中我们可以看到 选项被转化也是有先后顺序的
+从initState函数中我们可以看到 init选项也是有先后顺序的
 
 分别是 props => data => computed => watch
 
-目前先跳过props computed wath的初始化 重点看 initData 方法
+目前先跳过props computed wath的初始化 
 
-在生命周期beforeCreate触发之后, created生命周期触发之前
+重点关注 initData 方法
 
 ```js
 function initData (vm: Component) {
@@ -142,13 +143,27 @@ function initData (vm: Component) {
     // methods 与 data 中key如果重复 则警告
     if (props && hasOwn(props, key)) {
     } else if (!isReserved(key)) {
+      // 当我们 vm[key] 时 内部访问的是 vm._data[key]
       proxy(vm, `_data`, key)
     }
   }
   observe(data, true /* asRootData */)
 }
 ```
-请注意 <u>**observe**</u>方法
+
+发现 最终调用 <u>**observe**</u>方法
+
+其实 在observe方法内部 data选项会被转换成 getter/setter
+
+下文会详细描述
+
+由此可见
+
+在生命周期beforeCreate触发之后, created生命周期触发之前
+
+会对 data 选项进行转换
+
+这也是推荐在created钩子中请求接口的原因
 
 ### 2. 响应式原理的具体实现过程
 
