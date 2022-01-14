@@ -49,13 +49,11 @@ const descriptor = {
 ### 1. data选项被转换成响应式的时机
 
 当我们执行下面代码时
-
 ```js
 new Vue({ /** 选项 **/ })
 ```
 
 本质上就是调用Vue.prototype._init方法
-
 ```js
 // 代码简化
 Vue.prototype._init = function (Object) {
@@ -94,7 +92,6 @@ Vue.prototype._init = function (Object) {
 重点关注initState方法
 
 因为在该方法中 会对 data props 选项进行转换
-
 ```js
 function initState (vm) {
   vm._watchers = []
@@ -120,7 +117,6 @@ function initState (vm) {
 目前先跳过props computed wath的初始化 
 
 重点关注 initData 方法
-
 ```js
 function initData (vm: Component) {
   let data = vm.$options.data
@@ -164,7 +160,6 @@ function initData (vm: Component) {
 会对 data 选项进行转换
 
 这也是推荐在created钩子中请求接口的原因
-
 ### 2. 响应式原理的具体实现过程
 
 ```js
