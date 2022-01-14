@@ -1,6 +1,6 @@
 # 深入理解Vue响应式原理
 
-## 前提
+## 一. 前提
 在深入理解Vue响应式原理之前，需要具备的技能:
 1. ES5语法:
   * 引用数据类型之间的相互引用
@@ -41,6 +41,59 @@ const descriptor = {
   }
 ```
 
-## 原理
+## 二. 原理
 
-## 结论
+### 1. 哪些选项在Vue内部会被转化为响应式的
+在Vue选项中以下属性是会被转换为响应式的
+  * data
+  * props
+  * computed
+  * watch
+  * provide/inject
+
+### 2. 这些选项在什么时机被转换的呢
+当我们执行下面代码时
+```js
+new Vue({ /** 选项 **/ })
+```
+本质上就是调用Vue.prototype._init方法
+```js
+// 代码简化
+Vue.prototype._init = function (Object) {
+    const vm = this
+    vm._uid = uid++
+
+    let startTag, endTag
+    vm._isVue = true
+    // 选项合并
+    if (options && options._isComponent) {
+      initInternalComponent(vm, options)
+    } else {
+      vm.$options = mergeOptions(
+        resolveConstructorOptions(vm.constructor),
+        options || {},
+        vm
+      )
+    }
+    
+    vm._self = vm
+    initLifecycle(vm)
+    initEvents(vm)
+    initRender(vm)
+    callHook(vm, 'beforeCreate')
+    initInjections(vm) // resolve injections before data/props
+    initState(vm)
+    initProvide(vm) // resolve provide after data/props
+    callHook(vm, 'created')
+
+    if (vm.$options.el) {
+      vm.$mount(vm.$options.el)
+    }
+  }
+```
+
+
+## 三. 结论
+Vue的响应式原理可大致分为两步
+  1. 利用Object.defineProperty对用户传入的数据选项进行<u>**数据劫持**</u>
+  2. 当用户获取数据的时候会触发getter函数 <u>**收集依赖**</u>，变更数据的时候会触发setter函数 <u>**派发依赖**</u> 更新Dom
