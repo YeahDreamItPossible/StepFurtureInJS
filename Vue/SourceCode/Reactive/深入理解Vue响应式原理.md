@@ -46,7 +46,7 @@ const descriptor = {
 
 ## 二. 实现原理
 
-### 1. data选项被转换成响应式的时机
+### 1. 时机: data选项被转换成响应式的时机
 
 当我们执行下面代码时
 ```js
@@ -149,9 +149,7 @@ function initData (vm: Component) {
 
 发现 最终调用 <u>**observe**</u>方法
 
-其实 在observe方法内部 data选项会被转换成 getter/setter
-
-下文会详细描述
+其实 在observe方法内部 data选项会被转换成 getter/setter (下文会详细描述)
 
 由此可见
 
@@ -160,8 +158,8 @@ function initData (vm: Component) {
 会对 data 选项进行转换
 
 这也是推荐在created钩子中请求接口的原因
-### 2. 响应式原理的具体实现过程
-
+### 2. 过程: 响应式原理的具体实现过程
+现在我们重点研究 observe 函数
 ```js
 function observe (value: any, asRootData: ?boolean): Observer | void {
   if (!isObject(value) || value instanceof VNode) {
@@ -316,7 +314,7 @@ class Dep {
     }
   }
 
-  // 通知
+  // 通知订阅者更新
   notify () {
     const subs = this.subs.slice()
     if (process.env.NODE_ENV !== 'production' && !config.async) {
@@ -375,6 +373,7 @@ class Watcher {
   ) {
     this.vm = vm
     if (isRenderWatcher) {
+      // 渲染watcher
       vm._watcher = this
     }
     vm._watchers.push(this)
@@ -406,12 +405,6 @@ class Watcher {
       this.getter = parsePath(expOrFn)
       if (!this.getter) {
         this.getter = noop
-        process.env.NODE_ENV !== 'production' && warn(
-          `Failed watching path: "${expOrFn}" ` +
-          'Watcher only accepts simple dot-delimited paths. ' +
-          'For full control, use a function instead.',
-          vm
-        )
       }
     }
     this.value = this.lazy
@@ -571,5 +564,9 @@ class Watcher {
 
 ## 三. 总结
 Vue的响应式原理可大致分为两步
-  1. 利用Object.defineProperty对用户传入的数据选项进行<u>**数据劫持**</u>
-  2. 当用户获取数据的时候会触发getter函数 <u>**收集依赖**</u>，变更数据的时候会触发setter函数 <u>**派发依赖**</u> 更新Dom
+  1. 利用Object.defineProperty对用户传入的数据选项进行<u>**数据劫持**</u>,
+
+     即: 转换为 getter/setter 函数
+  2. 当用户获取数据的时候会触发getter函数 <u>**收集依赖**</u>，
+  
+     变更数据的时候会触发setter函数 <u>**派发依赖**</u> 更新DOM
