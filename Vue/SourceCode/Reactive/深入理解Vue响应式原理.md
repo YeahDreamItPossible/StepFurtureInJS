@@ -1,23 +1,23 @@
 # 深入理解Vue响应式原理
 
-## 说明
-1. 重点流程
+## 一. 必备知识点
+在深入理解Vue响应式原理之前，需要具备以下知识点:
 
-## 一. 前提
-在深入理解Vue响应式原理之前，需要具备的技能:
 1. ES5语法:
-  * 引用数据类型之间的相互引用
-  * Javascript中提供的Api: Object.defineProperty
-  * 闭包（实质上是函数,提供了访问内部变量的接口）
-2. ES6
-  * 类Class（类的静态属性、方法和实例属性、方法的区别）
-  * 代理Proxy
-3. 设计模式
-  * 发布订阅模式（发布订阅模式和观察者模式的区别）
+    * 引用数据类型之间的相互引用
+    * Javascript中提供的Api: Object.defineProperty
+    * 闭包（实质上是函数,提供了访问内部变量的接口）
 
-先看一段代码 来理解一些基础知识
+2. ES6
+    * 类Class（类的静态属性、方法和实例属性、方法的区别）
+    * 代理Proxy
+
+3. 设计模式
+    * 发布订阅模式（发布订阅模式和观察者模式的区别）
+
+下面先看一段代码来帮助我们理解一些知识点
 ```js
-// 先理解引用数据类型之间相互引用
+// 理解引用数据类型之间相互引用
 cosnt dep = {
   name: 'dep',
   watcher: null
@@ -44,22 +44,16 @@ const descriptor = {
 }
 ```
 
-## 二. 原理
+## 二. 实现原理
 
-### 1. 哪些选项在Vue内部会被转化为响应式的
-在Vue选项中以下属性是会被转换为响应式的
-  * data
-  * props
-  * computed
-  * watch
-  * provide/inject
+### 1. data选项被转换成响应式的时机
 
-### 2. 这些选项在什么时机被转换的呢
-当我们执行下面代码时
+    当我们执行下面代码时
 ```js
 new Vue({ /** 选项 **/ })
 ```
-本质上就是调用Vue.prototype._init方法
+
+    本质上就是调用Vue.prototype._init方法
 ```js
 // 代码简化
 Vue.prototype._init = function (Object) {
@@ -95,7 +89,11 @@ Vue.prototype._init = function (Object) {
   }
 ```
 
-在生命周期beforeCreate触发之后, created生命周期触发之前调用该initState
+    重点关注initState方法
+
+    因为在该方法中 会对 data props 选项进行转换
+
+
 ```js
 function initState (vm) {
   vm._watchers = []
@@ -115,8 +113,12 @@ function initState (vm) {
 ```
 
 从initState函数中我们可以看到 选项被转化也是有先后顺序的
+
 分别是 props => data => computed => watch
+
 目前先跳过props computed wath的初始化 重点看 initData 方法
+
+在生命周期beforeCreate触发之后, created生命周期触发之前
 
 ```js
 function initData (vm: Component) {
@@ -148,7 +150,7 @@ function initData (vm: Component) {
 ```
 请注意 <u>**observe**</u>方法
 
-### 3. 响应式原理的具体实现过程
+### 2. 响应式原理的具体实现过程
 
 ```js
 function observe (value: any, asRootData: ?boolean): Observer | void {
@@ -557,7 +559,7 @@ class Watcher {
 
 
 
-## 三. 结论
+## 三. 总结
 Vue的响应式原理可大致分为两步
   1. 利用Object.defineProperty对用户传入的数据选项进行<u>**数据劫持**</u>
   2. 当用户获取数据的时候会触发getter函数 <u>**收集依赖**</u>，变更数据的时候会触发setter函数 <u>**派发依赖**</u> 更新Dom
