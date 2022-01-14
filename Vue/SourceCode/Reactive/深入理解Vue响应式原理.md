@@ -38,7 +38,7 @@ const descriptor = {
     return value
   },
   set (newValue) {}
-	
+}
 ```
 
 ## 二. 原理
@@ -81,6 +81,7 @@ Vue.prototype._init = function (Object) {
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')
+    // 请注意 initInjections initState initProvide 函数
     initInjections(vm) // resolve injections before data/props
     initState(vm)
     initProvide(vm) // resolve provide after data/props
@@ -91,6 +92,50 @@ Vue.prototype._init = function (Object) {
     }
   }
 ```
+在生命周期beforeCreate触发之后, created生命周期触发之前调用以下三个方法
+```js
+initInjections
+initState
+initProvide
+```
+先看 initInjections方法
+```js
+// 代码简化
+function initInjections (vm: Component) {
+  const result = resolveInject(vm.$options.inject, vm)
+  if (result) {
+    toggleObserving(false)
+    Object.keys(result).forEach(key => {
+      /* istanbul ignore else */
+      if (process.env.NODE_ENV !== 'production') {
+        defineReactive(vm, key, result[key], () => {
+          warn(
+            `Avoid mutating an injected value directly since the changes will be ` +
+            `overwritten whenever the provided component re-renders. ` +
+            `injection being mutated: "${key}"`,
+            vm
+          )
+        })
+      } else {
+        defineReactive(vm, key, result[key])
+      }
+    })
+    toggleObserving(true)
+  }
+}
+```
+
+```js
+function initProvide (vm: Component) {
+  const provide = vm.$options.provide
+  if (provide) {
+    vm._provided = typeof provide === 'function'
+      ? provide.call(vm)
+      : provide
+  }
+}
+```
+
 
 
 ## 三. 结论
