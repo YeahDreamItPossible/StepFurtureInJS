@@ -16,12 +16,12 @@
 ```js
 // 先理解引用数据类型之间相互引用
 cosnt dep = {
-	name: 'dep',
+  name: 'dep',
   watcher: null
 }
 
 const watcher = {
-	name: 'watcher',
+  name: 'watcher',
   dep: null
 }
 
@@ -32,13 +32,13 @@ watcher.dep = dep
 // 理解 Object.defineProperty 以及 descriptor 对象
 // descriptor {configurable, enumerable, writable, value, getter, setter}
 const descriptor = {
-	configurable: true,
-  enumerable: true,
+  configurable: true,
+  enumerable: truem
   get () {
-  	return value
- 	},
-  set (newValue) {
-  }
+    return value
+  },
+  set (newValue) {}
+	
 ```
 
 ## 二. 原理
