@@ -44,10 +44,10 @@
 
 当打开这个 html文档时 审查元素看到真实dom
 
-![Alt show](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/dome_show.png)
+![Alt show](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/dom_show.png)
 
 当我们点击按钮后 再次审查元素
-![Alt show](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/dome_hidden.png)
+![Alt show](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/dom_hidden.png)
 
 发现 
 
