@@ -96,7 +96,7 @@ const createCompilerCreator = baseCompile => {
   * a. 接受一个对象(该对象属性是vue中定义的opions选项的对象)
   * b. 返回一个对象(该对象是对参数对象进行加工处理之后的对象)
 
-## 核心: 粗略定义一个通用的Vue高阶组件
+## 核心: 大致定义一个通用的Vue高阶组件
 
 下面代码可能需要了解[渲染函数](https://cn.vuejs.org/v2/guide/render-function.html#%E6%B7%B1%E5%85%A5%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1)的知识
 
