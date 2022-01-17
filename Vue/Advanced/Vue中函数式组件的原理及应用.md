@@ -220,7 +220,7 @@ import TableColumnFactory from '@/components/base/TableFactory/TableColumnFactor
 import PaginationFactory from '@/components/base/PaginationFactory'
 
 // 自定义样式
-import '@/components/base/TableLayout/index.scss'
+import './index.scss'
 
 const BaseTableLayout = ctx => {
   const { 
@@ -265,8 +265,8 @@ const BaseTableLayout = ctx => {
     <div class="tableLayoutWrapper" id="tableLayoutWrapper">
       <div class="tableContainer" id="tableContainer">
         <TableFactory 
-    			{ ...ctx } 
-  				onSelectionChange={onSelectionChange}
+          { ...ctx } 
+          onSelectionChange={onSelectionChange}
         >
           {TableColumns}
         </TableFactory>
