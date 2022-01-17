@@ -136,7 +136,7 @@ function initData (vm: Component) {
       if (methods && hasOwn(methods, key)) {
       }
     }
-    // methods 与 data 中key如果重复 则警告
+    // props 与 data 中key如果重复 则警告
     if (props && hasOwn(props, key)) {
     } else if (!isReserved(key)) {
       // 当我们 vm[key] 时 内部访问的是 vm._data[key]
@@ -326,9 +326,7 @@ class Dep {
   }
 }
 
-// The current target watcher being evaluated.
-// This is globally unique because only one watcher
-// can be evaluated at a time.
+// 该静态属性 target 的目的是为了保证 
 Dep.target = null
 const targetStack = []
 
