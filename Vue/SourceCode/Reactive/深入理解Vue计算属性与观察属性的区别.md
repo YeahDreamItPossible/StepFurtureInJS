@@ -71,4 +71,9 @@ _watchers 数组中存储了三个 watcher
   1. 都是 Watcher 的实例
   2. 都是响应式的
 
+
+### 不同点:
+  1. compute属性是惰性的
+
+
 ## 原理:
