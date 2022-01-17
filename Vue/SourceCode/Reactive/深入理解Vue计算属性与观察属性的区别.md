@@ -43,7 +43,7 @@ window.addEventListener('load', initApp)
 
 在浏览器中打印出 _app
 
-![Alt _app](../../Images/SourceCode/_app.jpg)
+![Alt _app](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/SourceCode/_app.jpg)
 
 _watcher 也是 Watcher 的实例, 不过是用于diff虚拟DOM 渲染真实DOM
 
@@ -53,15 +53,15 @@ _watchers 数组中存储了三个 watcher
 
 1. 计算Watcher
 
-![Alt computed](../../Images/SourceCode/computed.jpg)
+![Alt computed](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/SourceCode/computed.jpg)
 
 2. 观察Wacther
 
-![Alt watcher](../../Images/SourceCode/watcher.jpg)
+![Alt watcher](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/SourceCode/watcher.jpg)
 
 3. 渲染Watcher, 该wacher 就是上文中的 _watcher
 
-![Alt render](../../Images/SourceCode/_render.jpg)
+![Alt render](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/SourceCode/_render.jpg)
 
 我们先看
 
