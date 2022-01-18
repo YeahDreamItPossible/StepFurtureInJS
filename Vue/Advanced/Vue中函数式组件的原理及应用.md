@@ -52,7 +52,7 @@
 
 这个构造函数中 存储着该组件的 props data children parent
 
-至于更具体的内容会在源码[名字暂时没想好TODO](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Advanced/Vue%E4%B8%AD%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.md)文章详细解释
+至于更具体的内容会在源码[Vue组件详解TODO](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Advanced/Vue%E4%B8%AD%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.md)文章详细解释
 
 除了能提高性能，那函数式组件还有什么其他更好的应用吗?!!!
 
@@ -410,6 +410,10 @@ export default TableLayout
 ```
 
 ## 扩展: 何时使用函数式组件
+
+1. 包装组件
+
+2. 业务劫持
 
 ## 备注:
 
