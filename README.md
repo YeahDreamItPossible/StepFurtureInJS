@@ -4,6 +4,24 @@
 
 ## 设计模式(DesignPattern)
 
+### a. 创建型模式(BehavioralPatterns)
+
+  * 1. [工厂模式]()
+
+  * 2. [抽象工厂模式]()
+
+  * 3. [抽象工厂模式]()
+
+  * 4. [单例模式]()
+
+  * 5. [建造者模式]()
+
+### b. 结构型模式(StructuralPatterns)
+
+  * 1. [适配器模式](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/DesignPattern/StructuralPatterns/AdapterPatter.md)
+
+### c. 行为型模式
+
 ## ES6
 
 ## 高阶函数(HightOrderFunction)
