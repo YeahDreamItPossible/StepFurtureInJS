@@ -12,7 +12,7 @@
 
 ## 源码: 适配器模式在开发框架中的应用
 
-我们平时在开发中 经常会发送http请求
+我们平时在开发中 经常会与服务端进行沟通
 
 常用的库莫过于 Axios
 
@@ -20,11 +20,9 @@
 
   * a. XMLHttpRequest
 
-  * b. Http
+  * b. fetch
 
-  * c. fetch
-
-
+  * c. Http(Node)
 
 ## 应用: 平时工作中的使用
 
@@ -39,6 +37,7 @@
 那此时该组件的value = [startDateTime, endDateTime]
 
 而后端一般返回的数据是Object
+
 ```js
 const res = {
   startDateTime: String || timestamp || null,
