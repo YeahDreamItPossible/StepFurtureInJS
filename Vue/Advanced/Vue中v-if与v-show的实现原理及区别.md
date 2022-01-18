@@ -110,7 +110,7 @@ v-show指令 的元素新增了 style="display: none;" 属性
 
 最后放一张官网两个api的对比来更好的理解吧～
 
-![Alt 对比](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/v_if_show.png)
+![Alt 对比](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/v_if_show.jpg)
 
 ## 备注:
 
