@@ -4,9 +4,9 @@
 
 在看这篇文章之前
 
-需要大致了解这两个指令[条件渲染](https://cn.vuejs.org/v2/guide/conditional.html)的使用
+需要大致了解这两个指令[条件渲染](https://cn.vuejs.org/v2/guide/conditional.html)的使用  
 
-## 分析: 分析这两个指令
+## 分析: 浏览器调试
 
 先看下面的代码
 ```js
@@ -42,7 +42,7 @@
 </script>
 ```
 
-当打开这个 html文档时 审查元素看到真实dom
+当在浏览器打开这个html文件时 审查元素看到真实dom
 
 ![Alt show](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/dom_show.png)
 
@@ -56,7 +56,7 @@ v-show指令 的元素新增了 style="display: none;" 属性
 
 而 v-if指令 的元素则渲染成 注释节点
 
-## 分析: 原理
+## 原理: 指令内部实现
 
 当我们在浏览器中调试上文的html代码
 
@@ -72,6 +72,7 @@ v-show指令 的元素新增了 style="display: none;" 属性
           "id": "root"
       }
     }, [
+    // v-show指令
       _c('p', {
       directives: [{
         name: "show",
@@ -82,6 +83,7 @@ v-show指令 的元素新增了 style="display: none;" 属性
       staticClass: "show"
     }, [_v("Show")]), 
     _v(" "), 
+    // v-if指令
     (ifExist) ? _c('p', {
       staticClass: "ifExist"
     }, [_v("ifExist")]) : _e(), 
@@ -101,9 +103,15 @@ v-show指令 的元素新增了 style="display: none;" 属性
 
 可以发现:
 
-其实 v-if指令 在render函数中 实质上是三元表达式
+其实 v-if指令 在render函数中 实质上是三元表达式 根据条件动态渲染
 
-而 v-show指令
+(_c函数是将该ast渲染成vnode, _v函数是渲染成文本vnode, _e函数是渲染成空vnode)
+
+而 v-show指令 则是动态添加 style="display: none;" 属性
+
+最后放一张官网两个api的对比来更好的理解吧～
+
+![Alt 对比](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/v_if_show.jpg)
 
 ## 备注:
 

@@ -22,9 +22,9 @@
 
 函数式组件中的选项 functional 为 true, 不会创建 VueComponent 的实例
 
-抽象组件中的选项 abstract 为 true
+抽象组件中的选项 abstract 为 true, 会创建 VueComponent 的实例
 
-两者的区别暂不详述(稍后会在源码中进行分析)
+两者的区别暂不详述(稍后会在源码中进行分析[Vue组件详解TODO]())
 
 ## 定义: Vue函数式组件的定义
 
@@ -46,13 +46,13 @@
 
 一定请注意: 
 
-函数式组件在解析时会注入一个 content 
+函数式组件在解析时会注入一个 context 
 
 这个context 是 FunctionalRenderContext
 
 这个构造函数中 存储着该组件的 props data children parent
 
-至于更具体的内容会在源码[名字暂时没想好TODO](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Advanced/Vue%E4%B8%AD%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.md)文章详细解释
+至于更具体的内容会在源码[Vue组件详解TODO](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Advanced/Vue%E4%B8%AD%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.md)文章详细解释
 
 除了能提高性能，那函数式组件还有什么其他更好的应用吗?!!!
 
@@ -71,8 +71,8 @@
 利用函数式组件和JSX就可以解决~
 
 首先
-
-1. 封装TableColumn组件
+### 1. 二次封装
+1.1 封装TableColumn组件
 ```js
 // TableColumnFactory.js
 import { TableColumn } from 'element-ui'
@@ -87,24 +87,19 @@ const TableColumnFactory = (ctx) => {
 export default TableColumnFactory
 ```
 
-2. 封装Table组件
+1.2. 封装Table组件
 ```js
 // TableFactory.js
-import { Table, TableColumn } from 'element-ui'
+import { Table } from 'element-ui'
 import TableColumnFactory from './TableColumnFactory'
-
-// 导入对table自定义的样式
-import "./index.scss"
 
 const TableFactory = (ctx) => {
   const { 
     listeners = {},
     props = {},
-    scopedSlots = {}
   } = ctx
   
   const { 
-    data = [],
     columns = [] // 请注意columns属性
   } = props
 
@@ -133,7 +128,6 @@ const TableFactory = (ctx) => {
   }
 
   return (
-    // id="tableContainer" 是为了在table请求做局部加载
     <div class="tableContainer" id="tableContainer">
       <Table 
         {...ctx} 
@@ -147,13 +141,10 @@ const TableFactory = (ctx) => {
 export default TableFactory
 ```
 
-3. 封装ElPagination组件
+1.3. 封装ElPagination组件
 ```js
 // BasePagination.js
 import { Pagination} from 'element-ui'
-
-// 对pagination 的自定义样式
-import './index.scss'
 
 // 全局默认的el-pagination配置
 function getDefaultOptions () {
@@ -211,13 +202,10 @@ const PaginationFactory = ctx => {
 export default PaginationFactory
 ```
 
-4. 将Table组件和ElPagination组件组合 封装成TableLayout组件
+1.4. 将Table组件和ElPagination组件组合 封装成TableLayout组件
 ```js
-import { Table, Dialog } from 'element-ui'
-
-import TableFactory from '@/components/base/TableFactory'
-import TableColumnFactory from '@/components/base/TableFactory/TableColumnFactory'
-import PaginationFactory from '@/components/base/PaginationFactory'
+import TableFactory from './TableFactory'
+import PaginationFactory from './PaginationFactory'
 
 // 自定义样式
 import './index.scss'
@@ -235,24 +223,6 @@ const BaseTableLayout = ctx => {
     pagination = {},
   } = props
 
-  const TableColumns = columns.map((item, idx) => {
-    const context = {
-      props: { ...item }
-    }
-
-    if (item.render) {
-      context.scopedSlots = {
-        default: scope => {
-          return item.render.bind(h)(scope)
-        }
-      }
-    }
-
-    return (
-      <TableColumnFactory { ...context } />
-    )
-  })
-
   const onSelectionChange = (selection) => {
     listeners.selectionChange && listeners.selectionChange(selection)
   }
@@ -262,21 +232,23 @@ const BaseTableLayout = ctx => {
   }
   
   return (
-    <div class="tableLayoutWrapper" id="tableLayoutWrapper">
+    // id="tableLayout" 是为了在table请求做局部加载
+    <div class="tableLayout" id="tableLayout">
       <div class="tableContainer" id="tableContainer">
         <TableFactory 
           { ...ctx } 
           onSelectionChange={onSelectionChange}
-        >
-          {TableColumns}
-        </TableFactory>
+        />
       </div>
-
-      <div class="tablePaginationContainer" id="tablePaginationContainer">
-        <PaginationFactory 
-          paginationOptions={pagination}
-          onPageChange={onPageChange}/>
-      </div>
+      {
+        pagination ? (
+          <div class="tablePaginationContainer" id="tablePaginationContainer">
+            <PaginationFactory 
+              paginationOptions={pagination}
+              onPageChange={onPageChange}/>
+          </div>
+        ) : null
+      }
     </div>
   )
 }
@@ -284,7 +256,164 @@ const BaseTableLayout = ctx => {
 export default BaseTableLayout
 ```
 
+### 2. 使用
+
+新建Table目录
+
+2.1 先配置表格
+
+```js
+// columns.js
+// 代码简化
+export default [
+  // 支持TableColumn 组件所有的API, 并新增 render api用于个性化渲染自定义组件
+  {
+    label: '接口名称',
+    prop: 'name',
+  },
+  {
+    label: '状态',
+    prop: 'status',
+    render: 'ColorText'  // render 指的是 下文中的自定义个性化组件
+  },
+  {
+    label: '操作',
+    width: '200',
+    render: 'ActionGroup'
+  }
+]
+```
+
+2.2 自定义个性化组件 如: ColorText ActionGroup
+
+```js
+// ColorText.js
+const ColorText = (ctx) => {
+  const row = (ctx.props && ctx.props.scope && ctx.props.scope.row) || {}
+  const {
+    status,
+    _statusText = ''
+  } = row
+
+  const className = status ? "l-text l-text_normal" : "l-text_abnormal"
+  return (
+    <span class={className}>{_statusText}</span>
+  )
+}
+
+export default ColorText
+```
+
+```js
+// ActionGroup.js
+const ActionGroup = (ctx) => {
+  const {
+    props,
+    listeners
+  } = ctx
+  const {
+    scope
+  } = props
+  const dealConf = [
+    {
+      name: '编辑',
+      handler: () => {
+        listeners.edit && listeners.edit(scope.row, scope.$index)
+      }
+    },  
+    {
+      name: '详情',
+      handler: () => {
+        listeners.detail && listeners.detail(scope.row, scope.$index)
+      }
+    }
+  ]
+
+  return (
+    <div class='action-group'>
+      {dealConf.map((item) => (
+        <el-button onClick={item.handler} type='text' size='small'>
+          {item.name}
+        </el-button>
+      ))}
+    </div>
+  )
+}
+
+export default ActionGroup
+```
+
+2.3 再次封装Table
+
+```js
+// index.js
+import BaseTable from 'path/BaseTableLayout' // 上文封装的 Table组件
+import columns from './columns'
+
+import StatusText from './StatusText'
+import ActionGroup from './ActionGroup'
+
+const columnBridge = (column, listeners, h) => {
+  switch (column.render) {
+    case 'StatusText':
+      return ({
+        ...column,
+        render: (scope) => <StatusText scope={scope} />
+      })
+    case 'ActionGroup':
+      return ({
+        ...column,
+        render: (scope) => <ActionGroup scope={scope} onEdit={listeners.edit} onDetail={listeners.detail}></ActionGroup>
+      })
+    default:
+      return column
+  }
+}
+
+
+const TableLayout = (ctx) => {
+  let { listeners } = ctx
+
+  const onPageChange = (payload) => {
+    listeners.pageChange && listeners.pageChange(payload)
+  }
+
+  const onSelectionChange = selections => {
+    listeners.pageChange && listeners.selectionChange(selections)
+  }
+
+  const TableColumns = columns.map(column => columnBridge(column, listeners, h))
+
+  return (
+    <BaseTableLayout 
+      {...ctx} 
+      columns={TableColumns} 
+      onPageChange={onPageChange}
+      onSelectionChange={onSelectionChange}
+    />
+  )
+}
+
+export default TableLayout
+```
+
+2.4 使用
+
+```js
+<TableLayout 
+  ref="myApiTable"
+  :data="apiList" 
+  :paginationConfig="paginationInfo"
+  @pageChange="onPageChange" 
+  @selectionChange="onSelectionChange"
+/>
+```
+
 ## 扩展: 何时使用函数式组件
+
+1. 包装组件
+
+2. 业务劫持
 
 ## 备注:
 
