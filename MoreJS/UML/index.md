@@ -1,15 +1,13 @@
 # UML
 
-单向关联
+1. 泛化关系 Generalization
 
-双线关联
+2. 实现关系 Realization
 
-聚合关系
+3. 关联关系 Association
 
-组合关系
+4. 聚合关系 Aggregation
 
-依赖关系
+5. 组合关系 Composition
 
-继承关系
-
-实现关系
+6. 依赖关系 Dependency

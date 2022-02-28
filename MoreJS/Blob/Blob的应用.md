@@ -32,6 +32,8 @@ Object.prototype
 ```js
 Blob.prototype
     size
+    type
+
     slice // 分片处理
     text // Promise
     stream // Promise
@@ -39,8 +41,8 @@ Blob.prototype
 
 ```js
 FileReader.prototype
-    readAsDataURL
-    readAsText
+    readAsDataURL // base64
+    readAsText // text
     readAsBinaryString
     readAsArrayBuffer
 
@@ -52,7 +54,8 @@ FileReader.prototype
 
 ```js
 URL
-  createObjectURL // Blob
+  createObjectURL // 参数: Blob  返回值: URL
+  revokeObjectURL
 ```
 
 ```js
