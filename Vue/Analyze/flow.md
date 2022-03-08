@@ -32,3 +32,11 @@ TODO:
     normalizeDirectives
 
   合并策略
+    合并策略的代码写的有点low
+
+10. initState
+    顺序 props => methods => data => compute => watch
+
+    initProps时  非根实例 toggleObverving(false)
+
+    
