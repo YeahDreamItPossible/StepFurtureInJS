@@ -4,7 +4,7 @@
 
 在学习Vue高阶组件的应用前提,
 
-我们先了解下JavaScript中的高阶函数定义：
+1. 我们先了解下JavaScript中的高阶函数定义：
 
   * a.接受一个或者多个函数作为参数
   
@@ -35,8 +35,10 @@ const p2 = {
 }
 console.log(equal(p1, p2))
 ```
+2. 顺便了解下 Vue 中高阶函数的应用
 
-以下代码大致是Vue.compile内部实现原理, 了解即可
+以下代码大致是__[Vue.compile](https://cn.vuejs.org/v2/api/#Vue-compile)__内部实现原理, 了解即可
+
 ```js
 // 以下代码简化
 // 模版解析
@@ -115,12 +117,12 @@ function ComponentWrapper (BaseComponent) {
       return h(
         BaseComponent, 
         { 
-          on: this.$listeners, 
-          attrs: this.$attrs, 
-          props: this.$props, 
-          refs: this.$refs, 
-          slots: this.$slots, 
-          scopedSlots: this.$scopedSlots 
+          on: BaseComponent.$listeners, 
+          attrs: BaseComponent.$attrs, 
+          props: BaseComponent.$props, 
+          refs: BaseComponent.$refs, 
+          slots: BaseComponent.$slots, 
+          scopedSlots: BaseComponent.$scopedSlots 
         }
       ) 
     } 

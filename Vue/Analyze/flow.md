@@ -38,5 +38,38 @@ TODO:
     顺序 props => methods => data => compute => watch
 
     initProps时  非根实例 toggleObverving(false)
+        defineReactive(props, key, value)
 
-    
+    initData obverse(data, true)
+
+    initComputed Object.defineProperty(target, key, {
+        sharedPropertyDefinition: {
+            get: // 重写 getter 函数
+        }
+    })
+
+    initWatch
+
+11. watcher computed
+
+    相同:
+
+        1. 都是响应式的 watcher computed 都是Watcher 的实例
+
+        2. 都是依赖 某个响应式数据的
+
+        3. 
+
+    不同:
+
+        1. watcher 只有 setter 函数, 而 computed 只有 getter 函数
+
+        2. watcher 只要依赖变化后 会 立即update, 而 computed 只有 调用 渲染watcher 时 即 render 函数时才会去 update
+        即: computed 是惰性的 lazy = true
+
+
+12. $vnode 与 _vnode 区别
+
+    $vnode 应用组件
+
+    _vnode 所有节点
