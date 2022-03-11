@@ -37,7 +37,7 @@ console.log(equal(p1, p2))
 ```
 2. 顺便了解下 Vue 中高阶函数的应用
 
-以下代码大致是__[Vue.compile](https://cn.vuejs.org/v2/api/#Vue-compile)__内部实现原理, 了解即可
+以下代码大致是[Vue.compile](https://cn.vuejs.org/v2/api/#Vue-compile)内部实现原理, 了解即可
 
 ```js
 // 以下代码简化
