@@ -52,7 +52,7 @@
 
 #### 2. Vue源码(SourceCode)
 
-* 1. [深入理解Vue架构]
+* 1. [深入理解Vue架构](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/SourceCode/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Vue%E6%9E%B6%E6%9E%84.md)
 
 * 2. [深入理解Vue合并策略]
 
