@@ -6,9 +6,19 @@
 
 在源码内部 对Vue 
 
+## 分析流程
+
 1. 第一
 
 ```js
+function Vue (options) {
+  if (process.env.NODE_ENV !== 'production' &&
+    !(this instanceof Vue)
+  ) {
+    warn('Vue is a constructor and should be called with the `new` keyword')
+  }
+  this._init(options)
+}
 initMixin(Vue)
 stateMixin(Vue)
 eventsMixin(Vue)
@@ -184,3 +194,6 @@ function getOuterHTML (el: Element): string {
 
 Vue.compile = compileToFunctions
 ```
+
+## 总结
+
