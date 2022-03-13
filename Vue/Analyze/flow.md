@@ -73,3 +73,39 @@ TODO:
     $vnode 应用组件
 
     _vnode 所有节点
+
+13. _app.$options.render 函数
+
+    function anonymous () {
+        with (this) {
+            _c('', {}, [])
+        }
+    }
+
+    _c:
+    _v: createTextVNode
+    _e: createEmptyNode // 注释节点 node.isComment = true
+    _m: renderStatic // 渲染静态节点
+    _f: resolveFilter // 过滤器
+
+    _s: toString
+    _n: toNumber
+
+    _q: looseEqual // compare(a, b)
+    _i: looseIndexOf // findIndexInArray
+
+    _l: renderList // renderList(list, function (item, index) {_c()})
+    _t: renderSlot
+    _u: resolveScopedSlots // resolveScopedSlots(fns)
+
+    // TODO:
+    _o: markOnce
+    _k: checkKeyCodes
+    _b: bindObjectProps
+    _g: bindObjectListeners
+    _d: bindDynamicKeys
+    _p: prependModifier
+
+
+    // 解释
+    _s: Object.prototype.toString.call(unknown).slice(8, -1)
