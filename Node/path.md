@@ -59,8 +59,6 @@
   ext
 }
 ```
-  
-  
 
 8. path.format(pathObject)
 
@@ -68,7 +66,7 @@
 
 9. path.normlize(path)
 
-  路径片段
+  规范化路径
 
 10. path.relative(from, to)
 
