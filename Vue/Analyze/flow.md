@@ -109,3 +109,19 @@ TODO:
 
     // 解释
     _s: Object.prototype.toString.call(unknown).slice(8, -1)
+
+14. vm._c vm.$createElement
+
+    function createElement (context, tag, data, children, normalizationType) {}
+
+    createComponent(Ctor, data, context, children, tag)
+
+    Ctor: Class<Component> | Function | Object | void
+
+15. Component
+
+    functional
+
+    abstract
+
+    async 没有cid
