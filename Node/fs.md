@@ -73,7 +73,6 @@
 
 10. fs.close(callback)
 
-
     <!-- 目录(文件夹)操作 -->
 11. fs.mkdir(path[,options], callback)
 
