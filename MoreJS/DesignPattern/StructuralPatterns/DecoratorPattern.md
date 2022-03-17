@@ -117,7 +117,7 @@ class RequestMapDecorator {
   }
 
   keys () {
-    return Object.keys(this.requestURLMap).filter(key => !this.requestURLMap.get(key))
+    return Object.keys(this.requestMap)
   }
 
   size () {
