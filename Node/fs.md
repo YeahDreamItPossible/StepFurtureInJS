@@ -73,6 +73,16 @@
 
 10. fs.close(callback)
 
+  <!-- 文件存在  -->
+  fs.exists(path, callback)
+
+  <!-- 文件权限 -->
+  fs.access(path[, mode], callback)
+
+  fs.chmod(path, mode, callback)
+
+  fs.chown(path, uid, gid, callback)
+
     <!-- 目录(文件夹)操作 -->
 11. fs.mkdir(path[,options], callback)
 
