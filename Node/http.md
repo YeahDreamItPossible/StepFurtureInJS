@@ -22,12 +22,21 @@ server.on('request', (request, response) => {
 })
 
 
+```js
 http.OutgoingMessage
   http.ServerResponse
   http.ClientRequest
 
 http.IncomingMessage
 
-http.Sever
+net.Server
+  http.Sever
 
 http.Agent
+
+http.createServer((request, response) => {
+  // request instanceof http.IncomingMessage
+  // request instanceof http.ServerResponse
+})
+```
+
