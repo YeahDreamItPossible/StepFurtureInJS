@@ -27,7 +27,8 @@ http.OutgoingMessage
   http.ServerResponse
   http.ClientRequest
 
-http.IncomingMessage
+stream.Readable
+  http.IncomingMessage
 
 net.Server
   http.Sever
