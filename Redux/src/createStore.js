@@ -5,6 +5,8 @@ import isPlainObject from './utils/isPlainObject'
 import { kindOf } from './utils/kindOf'
 
 export function createStore(reducer, preloadedState, enhancer) {
+  // NOTE:
+  // 
   if (
     (typeof preloadedState === 'function' && typeof enhancer === 'function') ||
     (typeof enhancer === 'function' && typeof arguments[3] === 'function')
@@ -33,6 +35,7 @@ export function createStore(reducer, preloadedState, enhancer) {
     return enhancer(createStore)(reducer, preloadedState)
   }
 
+  // NOTE: reducer 必须是函数
   if (typeof reducer !== 'function') {
     throw new Error(
       `Expected the root reducer to be a function. Instead, received: '${kindOf(

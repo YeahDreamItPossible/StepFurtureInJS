@@ -84,7 +84,8 @@ function assertReducerShape(reducers) {
 }
 
 // NOTE:
-// 
+// 接受一个 对象(key: state中的key, value: reducer)
+// 返回一个函数
 export default function combineReducers(reducers) {
   const reducerKeys = Object.keys(reducers)
   const finalReducers = {}
@@ -114,6 +115,8 @@ export default function combineReducers(reducers) {
     unexpectedKeyCache = {}
   }
 
+  // NOTE:
+  // 尝试 每一个reducer 如果返回值为undefined 则报错
   let shapeAssertionError
   try {
     assertReducerShape(finalReducers)
@@ -159,9 +162,8 @@ export default function combineReducers(reducers) {
       nextState[key] = nextStateForKey
       hasChanged = hasChanged || nextStateForKey !== previousStateForKey
     }
-    // NOTE:
-    // 性能优化:  
-    // state树只修改某个变化的节点, 并不是所有的节
+    // NOTE: 性能优化
+    // state树只修改某个变化的节点, 并不是所有的节点
     hasChanged =
       hasChanged || finalReducerKeys.length !== Object.keys(state).length
     return hasChanged ? nextState : state
