@@ -83,25 +83,15 @@ function assertReducerShape(reducers) {
   })
 }
 
-/**
- * Turns an object whose values are different reducer functions, into a single
- * reducer function. It will call every child reducer, and gather their results
- * into a single state object, whose keys correspond to the keys of the passed
- * reducer functions.
- *
- * @param {Object} reducers An object whose values correspond to different
- * reducer functions that need to be combined into one. One handy way to obtain
- * it is to use ES6 `import * as reducers` syntax. The reducers may never return
- * undefined for any action. Instead, they should return their initial state
- * if the state passed to them was undefined, and the current state for any
- * unrecognized action.
- *
- * @returns {Function} A reducer function that invokes every reducer inside the
- * passed object, and builds a state object with the same shape.
- */
+// NOTE:
+// 
 export default function combineReducers(reducers) {
   const reducerKeys = Object.keys(reducers)
   const finalReducers = {}
+  // NOTE: 
+  // 校验 reducers 的键值对
+  // 非生产环境时 键 不能是undefined 
+  // 值 必须是函数
   for (let i = 0; i < reducerKeys.length; i++) {
     const key = reducerKeys[i]
 
@@ -155,6 +145,7 @@ export default function combineReducers(reducers) {
       const reducer = finalReducers[key]
       const previousStateForKey = state[key]
       const nextStateForKey = reducer(previousStateForKey, action)
+      // NOTE: reducer 未返回值时 报错
       if (typeof nextStateForKey === 'undefined') {
         const actionType = action && action.type
         throw new Error(
@@ -168,6 +159,9 @@ export default function combineReducers(reducers) {
       nextState[key] = nextStateForKey
       hasChanged = hasChanged || nextStateForKey !== previousStateForKey
     }
+    // NOTE:
+    // 性能优化:  
+    // state树只修改某个变化的节点, 并不是所有的节
     hasChanged =
       hasChanged || finalReducerKeys.length !== Object.keys(state).length
     return hasChanged ? nextState : state
