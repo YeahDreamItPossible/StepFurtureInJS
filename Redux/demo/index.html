@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .form {}
+    .form-item {
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+    .form-item_core {
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      min-width: 300px;
+      line-height: 40px;
+      padding: 0px 10px;
+    }
+    .form-item_core:focus {
+      outline: 1px solid #aaa;
+    }
+    .btn {
+      box-sizing: border-box;
+      margin-left: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0px 20px;
+      line-height: 36px;
+      cursor: pointer;
+    }
+  </style>
+  <style>
+    .todo-list {
+      margin-top: 20px;
+      width: 500px;
+      min-height: 100px;
+    }
+    .todo-item {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      line-height: 30px;
+    }
+    .text {
+      flex: 1;
+      cursor: pointer;
+    }
+    .text-done {
+      text-decoration: line-through;
+      color: #eee;
+    }
+    .clear {
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      line-height: 26px;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+  <style>
+    .filter-list {
+      display: flex;
+      margin-top: 20px;
+    }
+    .filter-item {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+    .filter-item_active {
+      color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- cdn -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="../dist/redux.js"></script>
+
+  <script>
+    const {
+      useState,
+      Fragment
+    } = React
+  </script>
+
+  <script>
+    const TODO = Object.freeze({
+      'ADD': 'ADD',
+      'REMOVE': 'REMOVE',
+      'TOGGLE': 'TOGGLE',
+      'CLEAR': 'CLEAR'
+    })
+    const FILTER = Object.freeze({
+      'ALL': 'ALL',
+      'UNDO': 'UNDO',
+      'DONE': 'DONe'
+    })
+  </script>
+
+  <script>
+    const Utils = {
+      findIndex (list, item, comparator) {
+        comparator = comparator || (todo => item.id === todo.id)
+        return list.findIndex(comparator)
+      }
+    }
+  </script>
+
+  <script>
+    const todoReducer = (state = [], action) => {
+      let index = -1
+      switch (action.type) {
+        case TODO.ADD:
+          let todo = { ...action }
+          delete todo.type
+          state = state.concat([todo])
+          break
+        case TODO.REMOVE:
+          index = Utils.findIndex(state, action)
+          state.splice(index, 1)
+          break
+        case TODO.TOGGLE:
+          index = Utils.findIndex(state, action)
+          const current = state[index]
+          state.splice(index, 1, {
+            ...current,
+            done: !current.done
+          })
+          break
+        case TODO.CLEAR:
+          state.length = 0;
+          break
+      }
+      return state.slice()
+    }
+
+    const filterReducer = (state = FILTER.ALL, action) => {
+      state = action.filter || state
+      return state
+    }
+    
+
+    const reducers = Redux.combineReducers({
+      todos: todoReducer,
+      filter: filterReducer
+    })
+
+    const previousState = {todos: []}
+    const store = Redux.createStore(reducers, previousState)
+  </script>
+
+  <script type="text/babel">
+    const TodoForm = () => {
+      const [todo, setTodo] = useState('')
+
+      const onTodoInput = e => {
+        const text = e.target.value
+        setTodo(text)
+      }
+
+      const onTodoAdd = () => {
+        if (todo) {
+          store.dispatch({
+            id: Date.now(),
+            type: TODO.ADD,
+            text: todo,
+            done: false
+          })
+          onTodoClear()
+        }
+      }
+
+      const onTodoClear = () => {
+        setTodo('')
+      }
+
+      const onReset = () => {
+        store.dispatch({type: TODO.CLEAR})
+      }
+
+      return (
+        <div className="form-item">
+          <input type="text" className="form-item_core" placeholder="please input your todo" value={todo} onInput={onTodoInput} />
+          <div className="btn" onClick={onTodoAdd}>添加</div>
+          <div className="btn" onClick={onTodoClear}>清空</div>
+          <div className="btn" onClick={onReset}>重置</div>
+        </div>
+      )
+    }
+  </script>
+
+  <script type="text/babel">
+    const TodoList = () => {
+      const [todos, setTodos] = useState(() => store.getState().todos)
+      store.subscribe((...args) => {
+        const state = store.getState()
+        const { filter, todos } = state
+        if (filter === FILTER.DONE) {
+          setTodos(todos.filter(item => item.done))
+        }
+        else if (filter === FILTER.UNDO) {
+          setTodos(todos.filter(item => !item.done))
+        }
+        else {
+          setTodos(todos)
+        }
+      })
+
+      const onTodoItemToggle = (todo) => {
+        store.dispatch({
+          type: TODO.TOGGLE,
+          ...todo
+        })
+      }
+
+      const onTodoRemove = todo => {
+        store.dispatch({
+          type: TODO.REMOVE,
+          ...todo
+        })
+      }
+
+      return (
+        <div className="todo-list">
+          {
+            todos.map(todo => (
+              <div className="todo-item" key={todo.id}>
+                <div className={todo.done ? 'text text-done' : "text"} onClick={() => onTodoItemToggle(todo)}>{todo.text}</div>  
+                <div className="clear" onClick={() => onTodoRemove(todo)}>x</div>
+              </div>
+            ))
+          }  
+        </div>
+      )
+    }
+  </script>
+
+  <script type="text/babel">
+    const Filters = () => {
+      const [active, setActive] = useState(FILTER.ALL)
+      const onFilterToggle = filter => {
+        setActive(filter)
+        store.dispatch({
+          type: FILTER.ALL,
+          filter
+        })
+      }
+      return (
+        <div className="filter-list">
+          {
+            Object.keys(FILTER).map(filter => (
+              <div className={active === filter ? "filter-item filter-item_active" : "filter-item"} key={filter} onClick={() => onFilterToggle(filter)}>{filter}</div>  
+            ))
+          }
+        </div>
+      )
+    }
+  </script>
+
+  <script type="text/babel">
+    const App = () => {
+      return (
+        <Fragment>
+          <div className="form">
+            <TodoForm />
+          </div>
+          <div className="todos">
+            <TodoList /> 
+          </div>
+          <div className="filters">
+            <Filters />  
+          </div>
+        </Fragment>
+      )
+    }
+  </script>
+
+  <script type="text/babel">
+    const bootstrap = () => {
+      const container = document.getElementById('app');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    }
+    
+    window.addEventListener('load', bootstrap)
+  </script>
+</body>
+</html>
