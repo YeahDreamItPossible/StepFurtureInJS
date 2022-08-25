@@ -159,6 +159,13 @@
 
     const previousState = {todos: []}
     const store = Redux.createStore(reducers, previousState)
+
+
+    const m = ({getState}) => dispatch => (name) => {
+      console.log(getState(), name)
+    }
+
+    const b = Redux.applyMiddleware(m)(Redux.createStore)(function reducers () {})
   </script>
 
   <script type="text/babel">
