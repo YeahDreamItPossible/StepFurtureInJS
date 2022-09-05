@@ -10,7 +10,7 @@
 
 ## 技术博客
 
-### Vue
+### Vue2.0
 
 * [Vue中高阶组件的定义及应用](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/VBlog/Vue/Vue%E4%B8%AD%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E5%BA%94%E7%94%A8.md)
 
