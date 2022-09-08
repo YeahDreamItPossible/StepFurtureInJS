@@ -54,9 +54,15 @@
 
 ### 设计架构
 
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;反复研读源码后结合个人理解整理的架构图：
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;反复研读源码后，结合个人理解，整理的架构图：
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简易版
 
 ![Alt redux_arch](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_arch.png)
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;复杂版
+
+  ![Alt redux_deprecated_arch](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_arch.png)
 
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据官网描述，结合架构图来更好理解设计理念：
@@ -75,3 +81,21 @@
     为了描述 action 如何改变 state tree ，你需要编写 reducers。(reducer 函数记录了数据突变的整个过程)
 
 ## 思考
+
+  作为一个状态管理的库，得具备以下特征：
+
+    * 获取状态
+
+    * 修改状态
+
+    * 监听状态
+
+  那么 redux 结合我们平时开发 还应该具备哪些能力呢
+
+    * 状态变更 可同步 可异步
+
+    * 状态变更 可依赖别的状态 惰性变更
+
+    * 状态的存储 可持久
+
+    * 状态的监听 更加颗粒化
