@@ -59,5 +59,19 @@
 ![Alt redux_arch](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_arch.png)
 
 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据官网描述，结合架构图来更好理解设计理念：
+
+  1. 单一数据源
+
+    整个应用的 state 被储存在一棵 object tree 中，并且这个 object tree 只存在于唯一一个 store 中。
+
+
+  2. State 是只读的
+
+    state是只读的, 只能通过getState获取satte。唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象(也可以理解为数据突变的源头)。
+
+  3. 使用纯函数来执行修改
+
+    为了描述 action 如何改变 state tree ，你需要编写 reducers。(reducer 函数记录了数据突变的整个过程)
 
 ## 思考
