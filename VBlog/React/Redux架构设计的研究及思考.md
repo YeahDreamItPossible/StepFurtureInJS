@@ -13,4 +13,8 @@
 
 ### api总结
 
-![Alt show](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/dom_show.png)
+![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_api.png)
+
+### 设计架构
+
+![Alt redux_arch](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_arch.png)
