@@ -11,39 +11,53 @@
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Redux 结合 React 简易版TODOLIST](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/SourceCode/Redux/v4.2.0/demo/index.html)(redux v4.2.0 + react v18.0.0)
 
+
 ## Redux架构
 
 ### api总结
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Redux API:
-      
-      * createStroe
-      
-      * combineReducers
 
-      * bindActionCreators
+  ```javascript  
 
-      * applyMiddleware
+      createStroe
+          
+      combineReducers
 
-      * compose
+      bindActionCreators
+
+      applyMiddleware
+
+      compose
+
+  ```
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Store API:
 
-      * getState
+  ```javascript
 
-      * dispatch
+      getState
 
-      * subscribe
+      dispatch
 
-      * replaceReducer
+      subscribe
 
-      * $$observable
+      replaceReducer
+
+      $$observable
+
+  ```
+
+  如图所示：
 
 ![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_api.png)
 
 ### 设计架构
 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;反复研读源码后结合个人理解整理的架构图：
+
 ![Alt redux_arch](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_arch.png)
+
 
 
 ## 思考
