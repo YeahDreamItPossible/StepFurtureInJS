@@ -68,6 +68,8 @@
 
     可以通过插件(redux-thunk redux-promise) 通过增强dispath 方式实现
 
+    
+    
     ![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_apply_middleware.png)
 
   2. 一个reducer 对应 一个state
@@ -82,6 +84,7 @@
 
     如 state 的变更 
 
+    
     如图
 
     ![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_dispatch.jpeg)
