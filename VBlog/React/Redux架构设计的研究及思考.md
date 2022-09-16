@@ -80,17 +80,23 @@
 
     有时候我们的token 或者用户信息需要持久存储 需要自己封装插件(如 db)实现某些数据的读写是持久性的
 
-  4. state 变更过程的检测不够强大
+  4. state 的变更不可以依赖于别的state
 
-    如 state 的变更 
+    如 Vuex 的 getters 属性
 
+  5. state 变更过程的监听不够颗粒化
+
+    如 state的变更时无法知道是哪个突变源(action)引起的，state变更后无法对old new状态进行对比
     
   如图
 
   ![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_dispatch.jpeg)
 
+  不过尽管，但是瑕不掩瑜，Redux仍然是一个非常好用的状态管理库！
 
+## 延伸
 
+  我觉得吧
 
   作为一个状态管理的库，得具备以下特征：
 
@@ -109,5 +115,7 @@
     * 状态的存储 可持久
 
     * 状态的监听 更加颗粒化
+
+  将来与[Vuex](https://vuex.vuejs.org/zh/guide/) [Pinia](https://pinia.vuejs.org/)深度对比后 将会实现一个简单的状态库。
 
   
