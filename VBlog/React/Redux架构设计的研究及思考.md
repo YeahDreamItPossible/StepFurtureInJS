@@ -70,7 +70,7 @@
 
   如图  
     
-  ![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_apply_middleware.png)
+  ![Alt redux_api](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/dev_0.1.0/VBlog/Images/redux_apply_middleware.jpg)
 
   2. 一个reducer 对应 一个state
   
