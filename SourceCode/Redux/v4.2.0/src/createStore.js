@@ -35,6 +35,7 @@ export function createStore(reducer, preloadedState, enhancer) {
       )
     }
 
+    // 使用插件
     return enhancer(createStore)(reducer, preloadedState)
   }
 
