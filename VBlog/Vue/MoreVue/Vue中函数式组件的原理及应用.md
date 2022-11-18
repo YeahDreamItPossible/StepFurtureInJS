@@ -42,7 +42,7 @@
 
 再接着看官网对 函数式组件 的进一步描述
 
-![Alt functional_strongger](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/functional_strongger.png)
+![Alt functional_strongger](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/VBlog/Images/Vue/MoreVue/functional_intro.png)
 
 一定请注意: 
 
@@ -56,7 +56,7 @@
 
 除了能提高性能，那函数式组件还有什么其他更好的应用吗?!!!
 
-![Alt functional_strongger](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/functional_2.png)
+![Alt functional_strongger](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/VBlog/Images/Vue/MoreVue/functional_more_intro.png)
 
 ## 应用: 平时工作中的使用
 
