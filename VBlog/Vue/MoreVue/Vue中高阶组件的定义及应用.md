@@ -91,7 +91,7 @@ const createCompilerCreator = baseCompile => {
 
 如图所示:
 
-![Alt sfc](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/Vue/Images/Advanced/sfc.png)
+![Alt sfc](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/VBlog/Images/Vue/MoreVue/component_instance.png)
 
 所以以此类推，vue中的高阶组件则应该定义为:
 
