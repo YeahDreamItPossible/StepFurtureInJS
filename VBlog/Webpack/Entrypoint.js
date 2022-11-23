@@ -1,0 +1,3 @@
+class Entrypoint extends ChunkGroup {
+
+}
