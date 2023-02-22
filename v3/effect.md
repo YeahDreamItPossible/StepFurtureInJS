@@ -92,3 +92,26 @@ class ReactiveEffect<T = any> {
   }
 }
 ```
+
+```js
+function effect<T = any>(
+  fn: () => T,
+  options?: ReactiveEffectOptions
+): ReactiveEffectRunner {
+  if ((fn as ReactiveEffectRunner).effect) {
+    fn = (fn as ReactiveEffectRunner).effect.fn
+  }
+
+  const _effect = new ReactiveEffect(fn)
+  if (options) {
+    extend(_effect, options)
+    if (options.scope) recordEffectScope(_effect, options.scope)
+  }
+  if (!options || !options.lazy) {
+    _effect.run()
+  }
+  const runner = _effect.run.bind(_effect) as ReactiveEffectRunner
+  runner.effect = _effect
+  return runner
+}
+```
