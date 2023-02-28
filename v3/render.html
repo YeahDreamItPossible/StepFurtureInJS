@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .red {
+      color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+  <div id="root" class="root">Hello World</div>
+
+  <div class="teleport"></div>
+  
+
+  <script crossorigin="anonymous" integrity="sha512-STHUuG39htplTKlnh6tN5YnZY7r9KNvttl+hoow7kWD/q/VgssYIBQ/llXSI/Yy5SyR5m5C8FrVx8FUmzYdB1Q==" src="https://lib.baomitu.com/vue/3.2.27/vue.global.js"></script>
+  <script>
+    const VueDemi = Vue
+  </script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/pinia/2.0.32/pinia.iife.js"></script>
+
+
+  <div>
+    <Vue.Suspense>
+      <template #fallback>Loading</template>
+      <template #default>Default</template>
+    </Vue.Suspense>
+  </div>
+  
+  <script>
+    const {
+      createApp,
+      defineComponent,
+      defineAsyncComponent,
+      Suspense,
+      Teleport,
+      h
+    } = Vue
+
+  </script>
+
+  <script>
+    const HelloWorld = defineComponent({
+      setup () {
+        return () => h('div', ['Hello World~', h('')])
+      }
+    })
+  </script>
+
+  <script>
+    const app = createApp({
+      // template: `Hello`
+      template: '<div v-pre class="red">Hello</div>'
+    })
+
+    app.component('HelloWorld', HelloWorld)
+    app.component('Suspense', Suspense)
+
+    app.mount('#root')
+
+  </script>
+</body>
+</html>
