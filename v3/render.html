@@ -82,9 +82,19 @@
         }
       }
 
+      const doIt = async () => {
+        try {
+          let result = await Promise.resolve('Over')
+          return result
+        } catch (e) {
+          return e
+        }
+      }
+
       return {
         user,
-        updateUser
+        updateUser,
+        doIt
       }
     })
   </script>
@@ -124,7 +134,8 @@
       const userStore = useUserStore(store)
 
       const onNameChange = value => {
-        userStore.updateUser({name: value})
+        let payload = userStore.updateUser({name: value})
+        console.log(payload)
       }
 
       const onAgeChange = value => {
@@ -167,6 +178,10 @@
 
   <script>
     const app = createApp({
+      mounted () {
+        console.log(Vue.getCurrentInstance())
+      },
+
       render () {
         return h(UserForm)
       }
