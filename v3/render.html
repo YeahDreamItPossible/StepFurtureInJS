@@ -9,6 +9,37 @@
     .red {
       color: #ff0000;
     }
+    .el-form {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+    }
+    .el-input {
+      display: flex;
+      margin-top: 10px;
+      width: 100%;
+      height: 40px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      border-width: 1px;
+    }
+    .el-item {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .el-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin: 10px;
+      padding: 6px 10px;
+      max-width: 150px;
+      cursor: pointer;
+      color: #ff0000;
+    }
   </style>
 </head>
 <body>
@@ -22,14 +53,6 @@
     const VueDemi = Vue
   </script>
   <script src="https://cdn.bootcdn.net/ajax/libs/pinia/2.0.32/pinia.iife.js"></script>
-
-
-  <div>
-    <Vue.Suspense>
-      <template #fallback>Loading</template>
-      <template #default>Default</template>
-    </Vue.Suspense>
-  </div>
   
   <script>
     const {
@@ -38,27 +61,118 @@
       defineAsyncComponent,
       Suspense,
       Teleport,
-      h
+      h,
+      reactive,
+      toRaw
     } = Vue
 
   </script>
 
   <script>
-    const HelloWorld = defineComponent({
-      setup () {
-        return () => h('div', ['Hello World~', h('')])
+    const store = Pinia.createPinia()
+
+    const useUserStore = Pinia.defineStore('user', () => {
+      let user = reactive({name: '', age: ''})
+
+      const updateUser = u => {
+        let { name, age } = user
+        if (u) {
+          user.name = u.name || name
+          user.age = u.age || age
+        }
+      }
+
+      return {
+        user,
+        updateUser
       }
     })
   </script>
 
   <script>
-    const app = createApp({
-      // template: `Hello`
-      template: '<div v-pre class="red">Hello</div>'
+    const ElInput = defineComponent({
+      name: 'ElInput',
+
+      props: ['name', 'modelValve'],
+
+      emits: ['update:name', 'update:modelValve'],
+
+      methods: {
+        onInput (e) {
+          let value = e.target.value
+          this.$emit('update:name', value)
+          this.$emit('update:modelValve', value)
+        }
+      },
+
+      render () {
+        return h('input', {
+          class: 'el-input',
+          placeholder: '请输入',
+          value: this.name,
+          onInput: this.onInput
+        })
+      }
     })
 
-    app.component('HelloWorld', HelloWorld)
-    app.component('Suspense', Suspense)
+    function UserForm () {
+      const user = reactive({
+        name: '',
+        age: ''
+      })
+
+      const userStore = useUserStore(store)
+
+      const onNameChange = value => {
+        userStore.updateUser({name: value})
+      }
+
+      const onAgeChange = value => {
+        userStore.updateUser({age: value})
+      }
+
+      return h('div', {
+        class: 'el-form'
+      }, [
+        h(ElInput, {
+          modelValve: user.name,
+          'onUpdate:modelValve': onNameChange
+        }),
+        h(ElInput, {
+          name: user.age,
+          'onUpdate:name': onAgeChange
+        }),
+        h(ElItem),
+        h(ElButton)
+      ])
+    }
+
+    function ElItem () {
+      const userStore = useUserStore(store)
+
+      window.userStore = userStore
+
+      console.log(toRaw(userStore))
+
+      return h('div', {class: 'el-item'}, [userStore.user.name, userStore.user.age || ''])
+    }
+
+    function ElButton () {
+      const userStore = useUserStore(store)
+      return h('div', { class: 'el-button', onClick () {
+        userStore.$reset()
+      }}, '按钮')
+    }
+  </script>
+
+  <script>
+    const app = createApp({
+      render () {
+        return h(UserForm)
+      }
+    })
+
+    app.use(store)
 
     app.mount('#root')
 
