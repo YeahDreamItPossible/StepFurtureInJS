@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .el-input {
+      box-sizing: border-box;
+      max-width: 300px;
+      width: 100%;
+      height: 40px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .el-button {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 300px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="root" id="root"></div>
+
+  <div id="tmpl">
+    <el-input v-model:name="onInput"></el-input>
+    <el-button @click="onClick">提交</el-button>
+  </div>
+
+  <script crossorigin="anonymous" integrity="sha512-STHUuG39htplTKlnh6tN5YnZY7r9KNvttl+hoow7kWD/q/VgssYIBQ/llXSI/Yy5SyR5m5C8FrVx8FUmzYdB1Q==" src="https://lib.baomitu.com/vue/3.2.27/vue.global.js"></script>
+  <script>
+    const VueDemi = Vue
+  </script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/pinia/2.0.32/pinia.iife.js"></script>
+
+  <script>
+    const {
+      createApp,
+      h,
+      ref,
+      reactive,
+      defineComponent,
+      toRaw
+    } = Vue
+  </script> 
+
+  <script>
+    const  ElInput = defineComponent({
+      emit: ['update:name'],
+
+      props: ['name'],
+
+      setup (props, { emit }) {
+        return () => h('input', {
+          class: 'el-input',
+          value: props.name,
+          onInput: (e) => {
+            emit('update:name', e.target.value)
+          }
+        })
+      }
+    })
+
+    const ElButton = defineComponent({
+      name: 'ElButton',
+
+      emit: ['click'],
+      
+      setup (props, {slots, attrs, emit}) {
+        return () => h('div', {
+          class: 'el-button',
+          onClickStop: (e) => {
+            emit('click')
+          }
+        }, (slots.default && slots.default()) || '按钮')
+      }
+    })
+
+  </script>
+
+  <script>
+    let container = document.getElementById('tmpl')
+    let tmpl = container.outerHTML
+
+    container.style.display = 'none'
+  
+    const app = createApp({
+      name: 'App',
+
+      data () {
+        return {
+          name: 'Le'
+        }
+      },
+
+      methods: {
+        onInput (e) {
+          console.log(22, e)
+          this.name = e.target.value
+        },
+
+        onClick () {
+          console.log(44)
+          this.name = ''
+        }
+      },
+
+      // template: tmpl
+      template: `<div id="tmpl">
+        <el-input v-model:name="name"></el-input>
+        <el-button @click="onClick">提交</el-button>
+      </div>`
+    })
+
+    app.component('ElInput', ElInput)
+
+    app.component('ElButton', ElButton)
+
+    app.mount('#root')
+  </script>
+
+</body>
+</html>
