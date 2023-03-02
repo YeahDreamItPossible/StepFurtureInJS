@@ -42,13 +42,12 @@
       }
     })
 
-    const useCopyStore = Pinia.defineStore({
-      id: 'copy',
-      
-      state () {
-        return {
-          name: 'Liu'
-        }
+    const useCopyStore = Pinia.defineStore('copy', () => {
+      let name = ('Wang')
+      const setName = n => name = n
+      return {
+        name,
+        setName
       }
     })
 
@@ -64,8 +63,10 @@
 
     // userStore.updateName('Wang')
 
-    debugger
     userStore.$reset()
+
+    const name = Vue.ref('lee')
+    const arr = Vue.ref([1,2,3])
   </script>
 </body>
 </html>
