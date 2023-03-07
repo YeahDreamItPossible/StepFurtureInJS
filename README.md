@@ -12,7 +12,11 @@
 
 ### Redux
 
-- [redux的简单应用]()
+- [redux的简单应用](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/notes/redux/redux%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8.md)
+
+- [redux@4.2.0源码逐行分析](https://github.com/YeahDreamItPossible/SourceCodeAnalyser/blob/main/js/redux%404.2.0/dist/redux.js)
+
+- [redux@4.2.0源码流程架构深度解析]()
 
 
 ### Vue2.0
