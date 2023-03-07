@@ -16,7 +16,7 @@
 
 - [redux@4.2.0源码逐行分析](https://github.com/YeahDreamItPossible/SourceCodeAnalyser/blob/main/js/redux%404.2.0/dist/redux.js)
 
-- [redux@4.2.0源码流程架构深度解析]()
+- [redux@4.2.0流程架构深度解析](https://github.com/YeahDreamItPossible/StepFurtureInJS/blob/main/notes/redux/redux%404.2.0%E6%BA%90%E7%A0%81%E6%B5%81%E7%A8%8B%E6%9E%B6%E6%9E%84%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90.md)
 
 
 ### Vue2.0
